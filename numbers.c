@@ -78,7 +78,7 @@ int find(int n, int i1, int a, int b, int op) {
                     if (find(b - a, i, b, a, '-'))
                         return 1;
                 if (a > 1 && b > 1 && a * b < 1000)
-                    if (find(a * b, i, a, b, '*'))
+                    if (find(a * b, i, a, b, 'x'))
                         return 1;
                 if (b > 1 && b <= a) {
                     c = a / b;
@@ -124,7 +124,6 @@ int main(int argc, char ** argv) {
 
     srand(time(NULL));
 
-
     shuffle(little, 20);
     shuffle(big, 4);
     //for(i=0;i<20;i++) {
@@ -154,8 +153,12 @@ int main(int argc, char ** argv) {
         if (argc == 2)
             nbig = atoi(argv[1]);
 
+      if (nbig > 100 && nbig < 1000)
+            result = nbig;
+
         if (nbig < 0 || nbig > 4)
             nbig = 2;
+  
         printf("big numbers: %d\n", nbig);
 
         for (i = 0; i < nbig; i++)
