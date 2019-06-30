@@ -1,7 +1,5 @@
 #include <stdlib.h>
-
 #include <stdio.h>
-
 #include <time.h>
 
 #define N 20
@@ -12,7 +10,7 @@ int tab[N];
 int stack_ptr;
 int stack_op[N];
 int stack_res[60];
-int result;
+int result, oresult;
 int solutions;
 int best;
 
@@ -129,6 +127,7 @@ int main(int argc, char ** argv) {
     //for(i=0;i<20;i++) {
     //printf("little: %d\n", little[i]);
     //}
+    printf("%s %s %s\n", argv[3], argv[1], argv[2]);
     solutions = 0;
     best = 9;
     if (argc < 3) {
@@ -148,9 +147,12 @@ int main(int argc, char ** argv) {
             tab[nb_num++] = atoi(argv[i]);
         }
     } else {
-        result = (rand() % 900) + 100;
+    	if (argc == 3)
+    	    result = atoi(argv[2]);
+    	else
+            result = (rand() % 900) + 100;
 
-        if (argc == 2)
+        if (argc >= 2)
             nbig = atoi(argv[1]);
 
       if (nbig > 100 && nbig < 1000)
@@ -173,9 +175,26 @@ int main(int argc, char ** argv) {
     for (i = 0; i < nb_num; i++)
         printf("%d ", tab[i]);
     printf("\n");
+    
+    i=0;
+    oresult = result;
+    while(best == 9) {
     res = find(0, 0, 0, 0, ' ');
+    if (best == 9) {
+    	  printf("Failed %d \n", result);
+    	  if(result > oresult)
+    	      result = oresult - i;
+    	  else {
+    	  	i++;
+    	  	result = oresult + i;
+    	  }
+        stack_ptr = -1;
+    }
+    }
     printf("Done\n");
-
+ 
+    if (result != oresult)
+    	printf("%d away\n", abs (result - oresult));
     if (best < 9) {
         for (i = 0; i <= stack_ptr; i++) {
             printf("%d %c %d = %d\n",
