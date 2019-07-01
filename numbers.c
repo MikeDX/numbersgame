@@ -141,7 +141,6 @@ int main(int argc, char ** argv) {
     p = 1;
     if (argc > 3) {
         result = atoi(argv[p]);
-
         nb_num = 0;
         for (i = p + 1; i < argc; i++) {
             tab[nb_num++] = atoi(argv[i]);
@@ -178,7 +177,7 @@ int main(int argc, char ** argv) {
     
     i=0;
     oresult = result;
-    while(best == 9) {
+    while(best == 9 && i < 11) {
     res = find(0, 0, 0, 0, ' ');
     if (best == 9) {
     	  printf("Failed %d \n", result);
