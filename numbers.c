@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define N 20
+#define N 30
 	// 364 5 9 4 8 100 25
 	// 573 75 25 2 5 8 7
+	// 576 75 1 3 1 3 6
 int nb_num;
 int tab[N];
 int stack_ptr;
@@ -24,10 +25,13 @@ int little[20];
 
 int nbig = 2;
 
+int magic = 0;
+
 int find(int n, int i1, int a, int b, int op)
 {
 	int i, j;
 	int c;
+	int show = 0;
 	// printf("%d %d %d %d %c\n", n, i1, a, b, op);
 	// printf("stack: %d\n", op);
 	// printf("nb: %d\n", nb_num);
@@ -42,16 +46,30 @@ int find(int n, int i1, int a, int b, int op)
 			solutions++;
 			// printf("Solution difficulty: %d\n", stack_ptr+1);
 			// printf("Solution difficulty: %d\n", nb_num);
+			show = 0;
 			if (best > stack_ptr)
 			{
 				best = stack_ptr;
+				show = 1;
 				printf("New best: %d ops\n", best + 1);
+			}
 
+			if (stack_res[3 * stack_ptr] == stack_res[3 * stack_ptr + 1])
+			{
+				if (magic != stack_res[3 * stack_ptr])
+				{
+					printf("PERFECT SQUARE SOLUTION!\n");
+					magic = stack_res[3*stack_ptr];
+					show = 1;
+				}
+			}
+			if (show == 1)
+			{
 				for (i = 0; i <= stack_ptr; i++)
 				{
 					printf("%d %c %d = %d\n",
-						   stack_res[3 * i], stack_op[i],
-						   stack_res[3 * i + 1], stack_res[3 * i + 2]);
+						   stack_res[3 * i], stack_op[i], stack_res[3 * i + 1],
+						   stack_res[3 * i + 2]);
 				}
 			}
 			if (best == 1)
